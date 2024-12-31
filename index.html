@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Pomodoro Timer</h1>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle">Toggle Theme</button>
+
+    <!-- Time Left Display -->
+    <h2>Time Left</h2>
+    <div id="timer">25:00</div>
+    
+    <!-- Predefined Options -->
+    <div id="options">
+      <label for="preset">Select Time: </label>
+      <select id="preset">
+        <option value="5">5 Minutes</option>
+        <option value="10">10 Minutes</option>
+        <option value="15">15 Minutes</option>
+        <option value="30">30 Minutes</option>
+        <option value="45">45 Minutes</option>
+        <option value="60">60 Minutes</option>
+      </select>
+      <button id="applyPreset">Apply</button>
+    </div>
+    
+    <!-- Custom Time Input -->
+    <div id="customTime">
+      <label for="custom">Or Enter Custom Time (minutes): </label>
+      <input type="number" id="custom" min="1" placeholder="Enter minutes">
+      <button id="applyCustom">Apply</button>
+    </div>
+    
+    <!-- Timer Controls -->
+    <div id="controls">
+      <button id="start">Start</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <!-- Alarm Sound -->
+    <audio id="alarmSound" src="sounds/ringing.wav" preload="auto"></audio>
+    
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 Pomodoro Timer. All rights reserved.</p>
+    </footer>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

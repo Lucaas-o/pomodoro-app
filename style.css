@@ -1,0 +1,110 @@
+/* Default Light Theme */
+:root {
+   --bg-color: #f4f4f4;
+   --text-color: #000;
+   --btn-bg: #4caf50;
+   --btn-text: #fff;
+}
+
+/* Dark Theme */
+body.dark-theme {
+   --bg-color: #1e1e1e;
+   --text-color: #fff;
+   --btn-bg: #555;
+   --btn-text: #fff;
+}
+  
+/* Apply background color and text color for #app */
+#app {
+   background-color: var(--bg-color); /* Set the background color based on the theme */
+   color: var(--text-color); /* Set text color based on the theme */
+   padding: 20px;
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   max-width: 400px;
+   margin: 100px auto;
+   width: 300px;
+}
+
+/* Common button styles */
+button {
+   background-color: var(--btn-bg);
+   color: var(--btn-text);
+   border: none;
+   border-radius: 5px;
+   padding: 10px 15px;
+   margin: 5px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s; /* Smooth transition */
+}
+
+button:hover {
+   background-color: #45a049;
+}
+
+/* Dark Theme specific buttons */
+body.dark-theme button:hover {
+   background-color: #6a6a6a; /* Lighter grey for hover in dark mode */
+}
+
+body {
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   font-family: Arial, sans-serif;
+   text-align: center;
+   background-color: var(--bg-color);
+   color: var(--text-color);
+   transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+#timer {
+   font-weight: bold;
+   font-size: 48px;
+   margin: 20px 0;
+}
+
+h1 {
+   font-weight: bold;
+   font-size: 36px;
+   margin: 20px 0;
+}
+
+label {
+   display: block;
+   margin: 10px 0;
+   font-weight: bold;
+}
+
+input[type="number"] {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+   margin: 5px 0;
+}
+
+input:focus {
+   border-color: #4CAF50;
+   outline: none;
+   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+#applyPreset, #applyCustom, #start, #pause, #reset {
+   background-color: #4CAF50;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   padding: 10px 15px;
+   margin: 5px;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+#applyPreset:hover, #applyCustom:hover, #start:hover, #pause:hover, #reset:hover {
+   background-color: #3e8e41;
+}
