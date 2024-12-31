@@ -19,7 +19,7 @@ _Alarm Sound:_ A ringing sound will play when the timer reaches zero.
 4. When the timer reaches zero, the alarm sound will play.
 5. Take a break and repeat the process as needed.
 
-##Code Structure
+## Code Structure
 
 The code is organized into three main files:
 
