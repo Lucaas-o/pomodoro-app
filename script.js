@@ -1,69 +1,99 @@
+// Timer Variables
 let timer;
 let timeLeft = 25 * 60; // Default: 25 minutes in seconds
+let initialTime = 25 * 60; // Store initial time for progress
 let isRunning = false;
+let isBreak = false;
+let breakCount = 0;
+let completedSessions = parseInt(localStorage.getItem("completedSessions")) || 0;
 
+// DOM Elements
+const timerLabel = document.getElementById("timer-label");
 const timerDisplay = document.getElementById("timer");
+const progressCircle = document.getElementById("progress-circle");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
 const resetButton = document.getElementById("reset");
-
 const presetDropdown = document.getElementById("preset");
 const applyPresetButton = document.getElementById("applyPreset");
-
 const customInput = document.getElementById("custom");
 const applyCustomButton = document.getElementById("applyCustom");
+const soundSelect = document.getElementById("soundSelect");
+const alarmSound = document.getElementById("alarmSound");
+const taskInput = document.getElementById("taskInput");
+const addTaskButton = document.getElementById("addTask");
+const taskList = document.getElementById("task-list");
+const sessionCount = document.getElementById("session-count");
+const dailyStats = document.getElementById("daily-stats");
+const themeToggle = document.getElementById("themeToggle");
 
-const alarmSound = document.getElementById("alarmSound"); // Get the audio element
-
-// Function to update the timer display
+// Update Timer Display
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  updateProgress();
 }
 
-// Function to start the timer
+// Update Progress Circle
+function updateProgress() {
+  const circumference = 2 * Math.PI * 45; // Circle circumference
+  const progress = (initialTime - timeLeft) / initialTime;
+  progressCircle.style.strokeDashoffset = circumference * (1 - progress);
+}
+
+// Start Timer
 function startTimer() {
-   if (isRunning) return;
-   isRunning = true;
-   timer = setInterval(() => {
-     if (timeLeft > 0) {
-       timeLeft--;
-       updateTimerDisplay();
-     } else {
-       onTimerEnd(); // Trigger timer end behavior when time is up
-     }
-   }, 1000);
+  if (isRunning) return;
+  isRunning = true;
+  timerDisplay.classList.add("running");
+  timer = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateTimerDisplay();
+    } else {
+      onTimerEnd();
+    }
+  }, 1000);
 }
 
-// Function to pause the timer
+// Pause Timer
 function pauseTimer() {
   clearInterval(timer);
   isRunning = false;
+  timerDisplay.classList.remove("running");
 }
 
-// Function to reset the timer
+// Reset Timer
 function resetTimer() {
   clearInterval(timer);
-  timeLeft = 25 * 60; // Reset to default 25 minutes
   isRunning = false;
+  timerDisplay.classList.remove("running");
+  isBreak = false;
+  breakCount = 0;
+  timeLeft = parseInt(localStorage.getItem("pomodoroTime")) * 60 || 25 * 60;
+  initialTime = timeLeft;
+  timerLabel.textContent = "Work Time Left";
   updateTimerDisplay();
-  saveUserPreference(25); // Reset the preference to 25 minutes
 }
 
-// Function to apply a predefined time
+// Apply Preset Time
 function applyPresetTime() {
+  pauseTimer();
   const selectedTime = parseInt(presetDropdown.value);
-  timeLeft = selectedTime * 60; // Convert minutes to seconds
+  timeLeft = selectedTime * 60;
+  initialTime = timeLeft;
   updateTimerDisplay();
   saveUserPreference(selectedTime);
 }
 
-// Function to apply a custom time
+// Apply Custom Time
 function applyCustomTime() {
   const customTime = parseInt(customInput.value);
   if (customTime > 0) {
-    timeLeft = customTime * 60; // Convert minutes to seconds
+    pauseTimer();
+    timeLeft = customTime * 60;
+    initialTime = timeLeft;
     updateTimerDisplay();
     saveUserPreference(customTime);
   } else {
@@ -71,28 +101,107 @@ function applyCustomTime() {
   }
 }
 
-// Function to save user preference in localStorage
-const saveUserPreference = minutes => localStorage.setItem("pomodoroTime", minutes);
+// Save User Preference
+function saveUserPreference(minutes) {
+  localStorage.setItem("pomodoroTime", minutes);
+}
 
-// Function to load user preference from localStorage
+// Load User Preference
 function loadUserPreference() {
   const savedTime = localStorage.getItem("pomodoroTime");
   if (savedTime) {
     const savedMinutes = parseInt(savedTime);
     timeLeft = savedMinutes * 60;
+    initialTime = timeLeft;
     updateTimerDisplay();
-
-    // Set the dropdown value to match saved time if it exists
     const option = Array.from(presetDropdown.options).find(
-      (option) => parseInt(option.value) === savedMinutes
+      (opt) => parseInt(opt.value) === savedMinutes
     );
-    if (option) {
-      presetDropdown.value = savedTime;
-    } else {
-      customInput.value = savedTime;
-    }
+    if (option) presetDropdown.value = savedTime;
+    else customInput.value = savedTime;
   }
 }
+
+// Timer End Logic
+function onTimerEnd() {
+  clearInterval(timer);
+  isRunning = false;
+  timerDisplay.classList.remove("running");
+  alarmSound.play();
+  notifyUser(isBreak ? "Break’s over! Back to work." : "Work session done! Time for a break.");
+
+  if (!isBreak) {
+    completedSessions++;
+    breakCount++;
+    logSession();
+    updateSessionCount();
+    isBreak = true;
+    timeLeft = breakCount % 4 === 0 ? 15 * 60 : 5 * 60; // Long break every 4th
+    initialTime = timeLeft;
+    timerLabel.textContent = breakCount % 4 === 0 ? "Long Break Time Left" : "Short Break Time Left";
+  } else {
+    isBreak = false;
+    timeLeft = parseInt(localStorage.getItem("pomodoroTime")) * 60 || 25 * 60;
+    initialTime = timeLeft;
+    timerLabel.textContent = "Work Time Left";
+  }
+  updateTimerDisplay();
+  startTimer(); // Auto-start next phase
+}
+
+// Update Session Count
+function updateSessionCount() {
+  sessionCount.textContent = `Sessions Completed: ${completedSessions}`;
+  localStorage.setItem("completedSessions", completedSessions);
+}
+
+// Log Session for Stats
+function logSession() {
+  const today = new Date().toDateString();
+  let stats = JSON.parse(localStorage.getItem("pomodoroStats")) || {};
+  stats[today] = (stats[today] || 0) + 1;
+  localStorage.setItem("pomodoroStats", JSON.stringify(stats));
+  displayStats();
+}
+
+// Display Stats
+function displayStats() {
+  const stats = JSON.parse(localStorage.getItem("pomodoroStats")) || {};
+  dailyStats.innerHTML = Object.entries(stats)
+    .map(([date, count]) => `<p>${date}: ${count} sessions</p>`)
+    .join("");
+}
+
+// Task Management
+function addTask() {
+  const taskText = taskInput.value.trim();
+  if (taskText) {
+    const li = document.createElement("li");
+    li.innerHTML = `<input type="checkbox"> ${taskText} <button class="delete">Delete</button>`;
+    taskList.appendChild(li);
+    taskInput.value = "";
+    li.querySelector(".delete").addEventListener("click", () => li.remove());
+  }
+}
+
+// Desktop Notifications
+function requestNotificationPermission() {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+}
+
+function notifyUser(message) {
+  if (Notification.permission === "granded") {
+    new Notification("Pomodoro Timer", { body: message });
+  }
+}
+
+// Theme Toggle
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+});
 
 // Event Listeners
 startButton.addEventListener("click", startTimer);
@@ -100,37 +209,17 @@ pauseButton.addEventListener("click", pauseTimer);
 resetButton.addEventListener("click", resetTimer);
 applyPresetButton.addEventListener("click", applyPresetTime);
 applyCustomButton.addEventListener("click", applyCustomTime);
-
-// Initialize timer display and load preferences
-loadUserPreference();
-updateTimerDisplay();
-
-function incrementSessionCount() {
-  completedSessions++;
-  localStorage.setItem("completedSessions", completedSessions);
-  sessionCount.textContent = `Sessions Completed: ${completedSessions}`;
-}
-
-// **Function to handle end of timer**
-function onTimerEnd() {
-  incrementSessionCount();
-    
-  // Play the alarm sound
-  alarmSound.play();
-  
-  // Alert the user
-  alert("Time's up!");
-}
-
-const themeToggle = document.getElementById("themeToggle");
-
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-  const isDarkMode = document.body.classList.contains("dark-theme");
-  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+addTaskButton.addEventListener("click", addTask);
+soundSelect.addEventListener("change", (e) => {
+  alarmSound.src = `sounds/${e.target.value}`;
 });
 
-// Load the user's theme preference from localStorage
+// Initialization
+loadUserPreference();
+updateTimerDisplay();
+updateSessionCount();
+displayStats();
+requestNotificationPermission();
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark-theme");
 }

@@ -1,34 +1,66 @@
-# Pomodoro Timer
-A simple and intuitive Pomodoro Timer built with HTML, CSS, and JavaScript.
+# Pomodoro Timer 🍅
+
+A sleek, modern Pomodoro Timer built with HTML, CSS, and JavaScript to boost productivity with style and functionality.
+
+![Pomodoro Timer Screenshot](screenshot.png) <!-- Add a screenshot or GIF here -->
 
 ## Overview
-This Pomodoro Timer allows users to work in focused 25-minute increments, with customizable time options and a built-in alarm sound. The timer can be started, paused, and reset as needed.
+
+This Pomodoro Timer is designed to help you stay focused with customizable work sessions, automated break cycles, and a suite of productivity-enhancing features. Whether you’re tackling tasks or tracking your progress, this app combines simplicity with a rich user experience.
 
 ## Features
-_Theme Toggle:_ Switch between light and dark themes with the click of a button.
-_Predefined Time Options:_ Choose from 5, 10, 15, 30, 45, or 60-minute intervals.
-_Custom Time Input:_ Enter a custom time in minutes.
-_Timer Controls:_ Start, pause, and reset the timer as needed.
-_Alarm Sound:_ A ringing sound will play when the timer reaches zero.
 
+- **Work & Break Cycles**: Default 25-minute work sessions with 5-minute short breaks and 15-minute long breaks every 4 cycles, all auto-transitioning.
+- **Customizable Timing**: Choose from presets (5, 10, 15, 25, 30, 45, 60 minutes) or set a custom duration.
+- **Task Management**: Add, track, and delete tasks with a clean, animated interface.
+- **Progress Visualization**: Watch your session progress with a dynamic circular progress bar.
+- **Theme Switcher**: Toggle between light and dark modes, with preferences saved locally.
+- **Sound Options**: Select from multiple alarm sounds to signal session ends.
+- **Desktop Notifications**: Get alerted even when the tab is inactive (permission required).
+- **Stats Dashboard**: Track completed sessions daily with a historical log.
+- **Smooth Animations**: Enjoy subtle effects like pulsing timers, sliding tasks, and button interactions.
 
-## How it Works
-1. Select a predefined time option or enter a custom time in minutes.
-2. Click the "Start" button to begin the timer.
-3. Work on your task without any distractions during the timer interval.
-4. When the timer reaches zero, the alarm sound will play.
-5. Take a break and repeat the process as needed.
+## How to Use
+
+1. **Set Your Time**: Pick a preset from the dropdown or enter a custom time in minutes.
+2. **Add Tasks**: Type a task and hit "Add" to keep your focus clear.
+3. **Start Working**: Click "Start" to begin your session—work uninterrupted until the timer ends.
+4. **Take Breaks**: The app auto-switches to a break (short or long) with an alarm and notification.
+5. **Track Progress**: Monitor completed sessions and stats in real-time.
+
+## Demo
+
+Try it live on [GitHub Pages](https://lucaas-o.github.io/pomodoro-app/ )! <!-- Update with your URL -->
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/lucaas-o/pomodoro-timer.git
+
+2. Open index.html in a modern browser.
+
+3. Ensure the sounds/ folder contains ringing.wav, bell.mp3, and chime.mp3 (or adjust the paths in script.js).
 
 ## Code Structure
 
-The code is organized into three main files:
+-  index.html: Defines the app’s structure with semantic HTML.
+-  style.css: Styles the layout with a two-column design, animations, and responsive breakpoints.
+-  script.js: Powers the timer logic, task management, and local storage features.
 
-* index.html: The main HTML file that contains the structure and content of the Pomodoro Timer.
-* style.css: The CSS file that styles the HTML content.
-* script.js: The JavaScript file that contains the logic and functionality of the Pomodoro Timer.
+## Screenshots
+[Light Mode]()
+[Dark Mode]()
 
 ## License
-- This Pomodoro Timer is licensed under the **MIT License**.
+
+Licensed under the MIT License (LICENSE). Feel free to use, modify, and share!
 
 ## Acknowledgments
-- The alarm sound used in this project is from [FreeSound.org](FreeSound).
+
+- Alarm sounds sourced from Freesound.org and Pixabay.com.
+- Inspired by the classic Pomodoro Technique by Francesco Cirillo.
+
+## Contributing
+
+Found a bug or have a feature idea? Open an issue or submit a pull request—I’d love to hear from you!

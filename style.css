@@ -4,30 +4,124 @@
    --text-color: #000;
    --btn-bg: #4caf50;
    --btn-text: #fff;
-}
-
-/* Dark Theme */
-body.dark-theme {
+   --border-color: #ccc;
+   --highlight-color: #4caf50;
+   --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
+ 
+ /* Dark Theme */
+ body.dark-theme {
    --bg-color: #1e1e1e;
    --text-color: #fff;
    --btn-bg: #555;
    --btn-text: #fff;
-}
-  
-/* Apply background color and text color for #app */
-#app {
-   background-color: var(--bg-color); /* Set the background color based on the theme */
-   color: var(--text-color); /* Set text color based on the theme */
+   --border-color: #666;
+   --highlight-color: #6a6a6a;
+   --shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+ }
+ 
+ /* Base Styles */
+ body {
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+   font-family: Arial, sans-serif;
+   background-color: var(--bg-color);
+   color: var(--text-color);
+   transition: background-color 0.3s, color 0.3s;
+ }
+ 
+ /* Main Container */
+ #app {
+   background-color: var(--bg-color);
+   color: var(--text-color);
    padding: 20px;
    border-radius: 5px;
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   max-width: 400px;
-   margin: 100px auto;
-   width: 300px;
-}
-
-/* Common button styles */
-button {
+   box-shadow: var(--shadow);
+   width: 90%;
+   max-width: 800px; /* Increased to accommodate two columns */
+   margin: 20px auto;
+   transition: all 0.3s ease;
+ }
+ 
+ /* Headings */
+ h1 {
+   font-size: 36px;
+   font-weight: bold;
+   margin: 20px 0;
+   text-align: center;
+ }
+ 
+ h2, h3 {
+   font-size: 24px;
+   margin: 15px 0;
+ }
+ 
+ /* Split Container */
+ .split-container {
+   display: flex;
+   flex-wrap: wrap; /* Allows wrapping on smaller screens */
+   gap: 20px;
+   justify-content: space-between;
+ }
+ 
+ .left-side, .right-side {
+   flex: 1;
+   min-width: 300px; /* Ensures each side has a minimum width */
+   padding: 10px;
+   transition: transform 0.3s ease;
+ }
+ 
+ .left-side:hover, .right-side:hover {
+   transform: scale(1.02); /* Subtle hover effect */
+ }
+ 
+ /* Timer Section */
+ #timer-section {
+   margin: 20px 0;
+   text-align: center;
+ }
+ 
+ #timer {
+   font-weight: bold;
+   font-size: 48px;
+   margin: 10px 0;
+   transition: transform 0.2s ease;
+ }
+ 
+ #timer.running {
+   animation: pulse 1s infinite;
+ }
+ 
+ @keyframes pulse {
+   0% { transform: scale(1); }
+   50% { transform: scale(1.05); }
+   100% { transform: scale(1); }
+ }
+ 
+ /* Progress Circle */
+ #progress {
+   display: block;
+   margin: 15px auto;
+   transform-origin: center;
+   transition: transform 0.3s ease;
+ }
+ 
+ #progress:hover {
+   transform: rotate(10deg); /* Fun hover effect */
+ }
+ 
+ #progress-circle {
+   stroke-dasharray: 283; /* 2 * π * 45 */
+   stroke-dashoffset: 283;
+   transition: stroke-dashoffset 0.5s ease-in-out; /* Smooth progress */
+ }
+ 
+ /* Buttons */
+ button {
    background-color: var(--btn-bg);
    color: var(--btn-text);
    border: none;
@@ -36,75 +130,131 @@ button {
    margin: 5px;
    font-size: 16px;
    cursor: pointer;
-   transition: background-color 0.3s; /* Smooth transition */
-}
-
-button:hover {
-   background-color: #45a049;
-}
-
-/* Dark Theme specific buttons */
-body.dark-theme button:hover {
-   background-color: #6a6a6a; /* Lighter grey for hover in dark mode */
-}
-
-body {
-   margin: 0;
-   padding: 0;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   font-family: Arial, sans-serif;
-   text-align: center;
-   background-color: var(--bg-color);
-   color: var(--text-color);
-   transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-}
-
-#timer {
-   font-weight: bold;
-   font-size: 48px;
-   margin: 20px 0;
-}
-
-h1 {
-   font-weight: bold;
-   font-size: 36px;
-   margin: 20px 0;
-}
-
-label {
-   display: block;
-   margin: 10px 0;
-   font-weight: bold;
-}
-
-input[type="number"] {
+   transition: background-color 0.3s ease, transform 0.2s ease;
+ }
+ 
+ button:hover {
+   background-color: var(--highlight-color);
+   transform: translateY(-2px); /* Lift effect */
+ }
+ 
+ button:active {
+   transform: translateY(1px); /* Pressed effect */
+ }
+ 
+ /* Inputs and Selects */
+ input[type="number"],
+ input[type="text"],
+ select {
    padding: 10px;
-   border: 1px solid #ccc;
+   border: 1px solid var(--border-color);
    border-radius: 5px;
    font-size: 16px;
    margin: 5px 0;
-}
-
-input:focus {
-   border-color: #4CAF50;
+   width: 100%;
+   max-width: 150px;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+ }
+ 
+ input:focus,
+ select:focus {
+   border-color: var(--highlight-color);
    outline: none;
    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-}
-
-#applyPreset, #applyCustom, #start, #pause, #reset {
-   background-color: #4CAF50;
-   color: white;
-   border: none;
-   border-radius: 5px;
-   padding: 10px 15px;
-   margin: 5px;
-   font-size: 16px;
-   cursor: pointer;
-}
-
-#applyPreset:hover, #applyCustom:hover, #start:hover, #pause:hover, #reset:hover {
-   background-color: #3e8e41;
-}
+ }
+ 
+ /* Labels */
+ label {
+   display: block;
+   margin: 10px 0;
+   font-weight: bold;
+ }
+ 
+ /* Options Section */
+ #options {
+   margin: 20px 0;
+ }
+ 
+ /* Task Section */
+ #tasks {
+   margin: 20px 0;
+ }
+ 
+ #task-list {
+   list-style: none;
+   padding: 0;
+   text-align: left;
+ }
+ 
+ #task-list li {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 5px;
+   border-bottom: 1px solid var(--border-color);
+   opacity: 0;
+   animation: slideIn 0.3s ease forwards;
+ }
+ 
+ @keyframes slideIn {
+   from { opacity: 0; transform: translateX(-20px); }
+   to { opacity: 1; transform: translateX(0); }
+ }
+ 
+ #task-list li input[type="checkbox"] {
+   margin-right: 10px;
+ }
+ 
+ #task-list li .delete {
+   background-color: #e74c3c;
+   padding: 5px 10px;
+ }
+ 
+ #task-list li .delete:hover {
+   background-color: #c0392b;
+ }
+ 
+ /* Controls Section */
+ #controls {
+   margin: 20px 0;
+   text-align: center;
+ }
+ 
+ /* Stats Section */
+ #stats {
+   margin: 20px 0;
+   font-size: 14px;
+ }
+ 
+ #daily-stats p {
+   margin: 5px 0;
+   transition: color 0.3s ease;
+ }
+ 
+ #daily-stats p:hover {
+   color: var(--highlight-color); /* Hover effect for stats */
+ }
+ 
+ /* Footer */
+ footer {
+   margin-top: 20px;
+   font-size: 12px;
+   color: #777;
+   text-align: center;
+ }
+ 
+ body.dark-theme footer {
+   color: #aaa;
+ }
+ 
+ /* Responsive Design */
+ @media (max-width: 700px) {
+   .split-container {
+     flex-direction: column;
+     align-items: center;
+   }
+   .left-side, .right-side {
+     width: 100%;
+     min-width: unset;
+   }
+ }
