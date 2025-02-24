@@ -2,7 +2,7 @@
 
 A sleek, modern Pomodoro Timer built with HTML, CSS, and JavaScript to boost productivity with style and functionality.
 
-![Pomodoro Timer Screenshot](screenshot.png) <!-- Add a screenshot or GIF here -->
+![Pomodoro Timer Screenshot](./screenshots/pomodoro-timer-screenshot.png) <!-- Add a screenshot or GIF here -->
 
 ## Overview
 
@@ -30,7 +30,7 @@ This Pomodoro Timer is designed to help you stay focused with customizable work 
 
 ## Demo
 
-Try it live on [GitHub Pages](https://lucaas-o.github.io/pomodoro-app/ )! <!-- Update with your URL -->
+Try it live on [GitHub Pages](https://lucaas-o.github.io/pomodoro-app/)! <!-- Update with your URL -->
 
 ## Installation
 
@@ -49,8 +49,8 @@ Try it live on [GitHub Pages](https://lucaas-o.github.io/pomodoro-app/ )! <!-- U
 -  script.js: Powers the timer logic, task management, and local storage features.
 
 ## Screenshots
-[Light Mode]()
-[Dark Mode]()
+[Light Mode](./screenshots/light-screenshot.png)
+[Dark Mode](./screenshots/dark-screenshot.png)
 
 ## License
 
